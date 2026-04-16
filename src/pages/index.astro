@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import Project from '../components/Project.astro';
+---
+
+<Layout
+  title="Sylvain Estebe · Computational cognitive science"
+  description="Cultural evolution and computational cognitive science. Bayesian modeling, LLM pipelines, agent-based simulation."
+>
+  <ThemeToggle />
+
+  <div class="site-header">
+    <img src="/profile.jpg" alt="Sylvain Estebe" />
+    <div class="header-text">
+      <h1>Sylvain Estebe</h1>
+      <p class="affiliation">Research Associate · Center for Humanities Computing · Aarhus University</p>
+    </div>
+  </div>
+
+  <div class="pitch">
+    <p>I build formal models of how environmental conditions — resources, uncertainty, volatility — shape human behavior. My work spans cultural evolution at the corpus scale (∼24k novels, LLM-based annotation) and individual decision-making (hierarchical Bayesian models, agent-based simulation).</p>
+    <p>Cultural evolution, computational cognitive science. Bayesian methods, LLMs, agent-based models.</p>
+  </div>
+
+  <SocialLinks />
+
+  <h2>Selected talks & updates</h2>
+  <ul class="updates">
+    <li><strong>Jun 2026</strong><span>Talk at neuroMONSTER, Rome — <em>Quadratic voting reduces polarization</em></span></li>
+    <li><strong>Apr 2026</strong><span>Talk at EHBEA 2026, Leiden — <em>Romantic love in French fiction (1500–1800)</em></span></li>
+    <li><strong>Sep 2024</strong><span>Joined CHC Aarhus as Research Associate</span></li>
+  </ul>
+
+  <h2>Research</h2>
+
+  <h3>Cultural evolution</h3>
+  <Project
+    title="Romantic love in French fiction, 1500–1999"
+    status="Manuscript in preparation. Pre-registration & code coming soon."
+  >
+    LLM annotation pipeline (GPT-5.4 + Gemini 3 Flash cross-validation, κ = 0.68 against human coders) applied to ∼24,000 novels to test a behavioral-ecology prediction on the rise of romantic love. With N. Baumard (Institut Jean Nicod, ENS/PSL).
+  </Project>
+
+  <h3>Computational cognitive science</h3>
+  <Project
+    title="Does quadratic voting reduce polarization?"
+    status="Manuscript in preparation. Code coming soon."
+  >
+    Cognitive agent-based model comparing plurality and quadratic voting under varying environmental volatility (economic, security). 1,019 simulated agents; quadratic voting reduces polarization (d = 0.30). With K. Enevoldsen, K. Nielbo, N. Legrand (CHC Aarhus).
+  </Project>
+
+  <Project title="Beyond prediction: a cognitive model of customer churn">
+    MSc thesis. Custom hierarchical Bayesian model of customer churn applied to subscription data. Industry collaboration with Norlys. Supervisor: N. Legrand.
+  </Project>
+
+  <h2>Software</h2>
+  <Project title="PyHGF">
+    Contributor to the open-source <a href="https://computationalpsychiatry.github.io/pyhgf/">Hierarchical Gaussian Filter library</a> — JAX-based predictive coding for computational psychiatry.
+  </Project>
+
+  <h2>Before academia</h2>
+  <div class="about">
+    <p>I returned to higher education at 28 after a decade as a music producer (4 gold and 1 platinum records as composer, SACEM member). The work — measuring what resonates at scale, A/B-testing arrangements, calibrating decisions on millions of plays — turned out to be surprisingly continuous with what I do now.</p>
+  </div>
+
+  <h2>About</h2>
+  <div class="about">
+    <p>My research asks how environmental conditions — resources, uncertainty, volatility — shape human behavior and culture. A common thread runs through the scales above: how agents, individual or cultural, translate environmental information into behavior.</p>
+    <p>I'm based in Aarhus, Denmark, with an ongoing collaboration at Institut Jean Nicod (ENS/PSL, Paris).</p>
+  </div>
+
+  <div class="site-footer">
+    Last updated April 2026 · Built with <a href="https://astro.build">Astro</a>
+  </div>
+</Layout>
