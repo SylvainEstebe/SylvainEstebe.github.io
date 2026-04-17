@@ -21,7 +21,7 @@ import GithubLink from '../components/GithubLink.astro';
   </div>
 
   <div class="pitch">
-    <p>I study and model how environmental conditions — resources, uncertainty, volatility — shape human behavior at three scales: populations (cultural evolution, behavioral ecology), groups (collective decision-making, mechanism design), and individuals (Bayesian cognition, computational cognitive science). Tools: machine learning, LLM pipelines, agent-based simulation, hierarchical Bayesian models.</p>
+    <p>I build computational models to study how people make decisions under uncertainty — using Bayesian inference, agent-based simulation, and LLM pipelines. My work spans individual cognition, collective decision-making, and cultural evolution, with a common thread: how environmental conditions (resources, volatility) shape behavior.</p>
   </div>
 
   <SocialLinks />
@@ -33,7 +33,7 @@ import GithubLink from '../components/GithubLink.astro';
     title="Romantic love in French fiction, 1500–1999"
     status="Manuscript in preparation."
   >
-    LLM ensemble annotation pipeline (κ = 0.68 vs. human coders) applied to ~24,000 novels. Tests a behavioral-ecology prediction: does the rise of romantic love in fiction track changes in resource availability? With Nicolas Baumard (Institut Jean Nicod, ENS/PSL). <GithubLink href="https://github.com/SylvainEstebe/YOUR_REPO" />
+    LLM ensemble annotation pipeline applied to a corpus of French novels. Tests a behavioral-ecology prediction: does the rise of romantic love in fiction track changes in resource availability? With Nicolas Baumard (Institut Jean Nicod, ENS/PSL).
   </Project>
 
   <h3>Group · Collective decision-making</h3>
@@ -41,25 +41,25 @@ import GithubLink from '../components/GithubLink.astro';
     title="Quadratic voting and polarization"
     status="Manuscript in preparation."
   >
-    Agent-based model: 1,019 Bayesian cognitive agents comparing plurality vs. quadratic voting under environmental volatility (economic shocks, security crises). Does mechanism design reduce polarization? With Nicolas Legrand (CHC, Aarhus). <GithubLink href="https://github.com/SylvainEstebe/YOUR_REPO" />
+    Agent-based model of Bayesian cognitive agents comparing plurality vs. quadratic voting under environmental volatility (economic shocks, security crises). Does mechanism design reduce polarization? With Nicolas Legrand (CHC, Aarhus).
   </Project>
 
   <h3>Individual · Computational cognitive science</h3>
   <Project title="A cognitive model of customer churn">
-    MSc thesis. Hierarchical Bayesian model of the decision process behind customer churn — modeling how beliefs about a service evolve and tip into leaving. Used to inform data collection strategy. Industry collaboration with Norlys. Supervisor: Nicolas Legrand. <GithubLink href="https://github.com/SylvainEstebe/YOUR_REPO" />
+    MSc thesis. Hierarchical Bayesian model of the decision process behind customer churn — modeling how beliefs about a service evolve and tip into leaving. Used to inform data collection strategy. Industry collaboration with Norlys. Supervisor: Nicolas Legrand.
   </Project>
 
   <h3>Other projects</h3>
   <Project title="Insecurity and cooperation across 13 countries">
-    Decision-making modeling on public goods game data. Perceived insecurity predicts lower contributions and faster cooperation decline — individuals from high-insecurity nations show lower initial optimism and greater sensitivity to others' choices. <GithubLink href="https://github.com/SylvainEstebe/YOUR_REPO" />
+    Decision-making modeling on public goods game data. Perceived insecurity predicts lower contributions and faster cooperation decline — individuals from high-insecurity nations show lower initial optimism and greater sensitivity to others' choices. <GithubLink href="https://github.com/SylvainEstebe/decision_making_modeling" />
   </Project>
 
   <Project title="Predicting the intention–action gap in childcare">
-    End-to-end ML pipeline (Python) on inequality and childcare data. Full workflow: preprocessing, model fitting, evaluation, visualization. <GithubLink href="https://github.com/SylvainEstebe/YOUR_REPO" />
+    End-to-end ML pipeline (Python) on inequality and childcare data. Full workflow: preprocessing, model fitting, evaluation, visualization. <GithubLink href="https://github.com/SylvainEstebe/predict_intention_action_gap" />
   </Project>
 
   <Project title="Cognitive distortions in embedding space">
-    NLP pipeline: sentence-transformer embeddings → UMAP dimensionality reduction → HDBSCAN clustering (Bayesian-optimized) on 921 labeled thought examples. Builds a data-driven taxonomy of cognitive distortions. <GithubLink href="https://github.com/SylvainEstebe/cognitive_distortion_embeding" label="Code & dashboard" />
+    NLP pipeline: sentence-transformer embeddings → UMAP dimensionality reduction → HDBSCAN clustering (Bayesian-optimized) on 921 labeled thought examples. Explores whether cognitive distortion categories have a data-driven structure in embedding space. <GithubLink href="https://github.com/SylvainEstebe/cognitive_distortion_embeding" label="Code & dashboard" />
   </Project>
 
   <Project title="Cognitive effort in musical performance">
@@ -77,13 +77,15 @@ import GithubLink from '../components/GithubLink.astro';
   </Project>
 
   <h2>Teaching & outreach</h2>
-  <div class="about">
-    <p>Teaching assistant, Probability Theory and Statistics for Computational Humanities (Aarhus, 2025). Mentor at the Danish Data Science Academy (2025–2026). Translator for Cognijunior — French adaptation of a neuroscience teaching kit for young audiences (2020–2022).</p>
-  </div>
+  <ul class="updates">
+    <li><strong>2025–2026</strong><span>Mentor, Danish Data Science Academy</span></li>
+    <li><strong>2025</strong><span>Teaching assistant, <em>Probability Theory and Statistics for Computational Humanities</em>, Aarhus University</span></li>
+    <li><strong>2020–2022</strong><span>Translator, Cognijunior — French adaptation of a neuroscience teaching kit for young audiences</span></li>
+  </ul>
 
   <h2>Talks & updates</h2>
   <ul class="updates">
-    <li><strong>Jun 2026</strong><span>neuroMONSTER, Rome — <em>Quadratic voting reduces polarization</em></span></li>
+    <li><strong>Jun 2026</strong><span>7th International Conference on the Mathematics of Neuroscience and AI, Rome — <em>Quadratic voting reduces polarization</em></span></li>
     <li><strong>Apr 2026</strong><span>EHBEA 2026, Leiden — <em>Romantic love in French fiction (1500–1800)</em></span></li>
     <li><strong>Jun 2025</strong><span>Joined CHC Aarhus as Research Assistant</span></li>
     <li><strong>Jun 2025</strong><span>MSc Cognitive Science, Aarhus (distinction, grade A on thesis)</span></li>
@@ -91,14 +93,14 @@ import GithubLink from '../components/GithubLink.astro';
 
   <h2>About</h2>
   <div class="about">
-    <p>One question at every scale: how do agents — minds, groups, cultures — translate environmental information into behavior? Computational cognitive science and computational social science to move between scales. Build a model, test it against data, make sure it explains something.</p>
-    <p>Before academia I spent a decade as a music producer — composing for <a href="https://www.youtube.com/watch?v=POhHq6dmPWY&list=RDPOhHq6dmPWY&start_radio=1">Jok'air</a>, <a href="https://www.youtube.com/watch?v=snSiqRZDXMI&list=RDsnSiqRZDXMI&start_radio=1">Disiz</a>, and others, as well as music for ads and theater (4× gold, 1× platinum).</p>
+    <p>I'm interested in how agents translate information about their environment into behavior — whether the agent is a person, a group, or a population. I like moving between scales, building models that are simple enough to reason about and testable against data.</p>
+    <p>Before academia I spent a decade as a music producer — composing for <a href="https://www.youtube.com/watch?v=POhHq6dmPWY&list=RDPOhHq6dmPWY&start_radio=1">Jok'air</a> and <a href="https://www.youtube.com/watch?v=snSiqRZDXMI&list=RDsnSiqRZDXMI&start_radio=1">Disiz</a>, along with work for ads and theater (certified gold and platinum).</p>
     <p>Based in Aarhus, Denmark. Ongoing collaboration at Institut Jean Nicod (ENS/PSL, Paris).</p>
   </div>
 
   <h2>Contact</h2>
   <div class="about">
-    <p><a href="mailto:sylvain.estebe@gmail.com">sylvain.estebe@gmail.com</a> · <a href="https://github.com/SylvainEstebe">GitHub</a> · <a href="https://orcid.org/YOUR_ORCID">ORCID</a> · <a href="https://www.linkedin.com/in/sylvain-estebe-97485a118/?locale=en">LinkedIn</a> · <a href="https://instagram.com/YOUR_INSTAGRAM">Instagram</a></p>
+    <p><a href="mailto:sylvain.estebe@gmail.com">sylvain.estebe@gmail.com</a> · <a href="https://github.com/SylvainEstebe">GitHub</a> · <a href="https://orcid.org/0009-0006-6020-869X">ORCID</a> · <a href="https://www.linkedin.com/in/sylvain-estebe-97485a118/?locale=en">LinkedIn</a> · <a href="https://instagram.com/sylvain_estebe">Instagram</a></p>
     <p><a href="/cv.pdf">CV (PDF)</a></p>
   </div>
 
