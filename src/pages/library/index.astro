@@ -1,0 +1,93 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import {
+  library,
+  hasDetail,
+  detailPath,
+  type LibraryType,
+  type LibraryItem,
+} from '../../data/library';
+
+const sections: Array<{ type: LibraryType; label: string; byLabel: string }> = [
+  { type: 'book', label: 'Books', byLabel: 'by' },
+  { type: 'film', label: 'Films', byLabel: 'dir.' },
+  { type: 'music', label: 'Music', byLabel: '' },
+];
+
+function bucket(items: LibraryItem[], type: LibraryType) {
+  return items
+    .filter((i) => i.type === type)
+    .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
+}
+
+const total = library.length;
+---
+
+<Layout
+  title="Library · Sylvain Estebe"
+  description="Books, films, and music — what I've been reading, watching, and listening to."
+>
+  <ThemeToggle />
+
+  <header class="blog-header">
+    <h1>Library</h1>
+    <p class="pitch">Books, films, and music that stayed with me. Updated when I remember.</p>
+  </header>
+
+  {total === 0 ? (
+    <div class="photos-empty">
+      Nothing here yet. Open <code>src/data/library.ts</code> and uncomment a few entries.
+    </div>
+  ) : (
+    sections.map(({ type, label, byLabel }) => {
+      const items = bucket(library, type);
+      if (items.length === 0) return null;
+      return (
+        <section class="library-section">
+          <h2>{label}</h2>
+          <ul class="library-list">
+            {items.map((item) => {
+              // Priority: detail page if extra content; else external link; else plain.
+              const detail = hasDetail(item);
+              const href = detail ? detailPath(item) : item.link;
+              const isExternal = !detail && Boolean(item.link);
+              const TitleEl: 'a' | 'span' = href ? 'a' : 'span';
+              const titleProps = href
+                ? (isExternal
+                    ? { href, target: '_blank', rel: 'noopener' }
+                    : { href })
+                : {};
+              return (
+                <li class="library-item">
+                  <div class="library-item__head">
+                    <TitleEl class="library-item__title" {...titleProps}>
+                      {item.title}
+                    </TitleEl>
+                    {item.status === 'now' && <span class="badge badge--now">now</span>}
+                    {item.status === 'abandoned' && <span class="badge badge--abandoned">abandoned</span>}
+                  </div>
+                  <div class="library-item__meta">
+                    {item.by && (
+                      <span>{byLabel ? `${byLabel} ` : ''}{item.by}</span>
+                    )}
+                    {item.year && <span class="library-item__year">{item.year}</span>}
+                    {item.rating && (
+                      <span class="library-item__rating" aria-label={`${item.rating} out of 5`}>
+                        {'★'.repeat(item.rating)}<span class="dim">{'★'.repeat(5 - item.rating)}</span>
+                      </span>
+                    )}
+                  </div>
+                  {item.note && <p class="library-item__note">{item.note}</p>}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      );
+    })
+  )}
+
+  <SiteFooter />
+</Layout>

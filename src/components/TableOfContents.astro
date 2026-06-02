@@ -1,0 +1,30 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+  /** Only show headings up to this depth (h2 = 2). */
+  maxDepth?: number;
+  /** Minimum number of headings before TOC is worth rendering. */
+  minItems?: number;
+}
+
+const { headings, maxDepth = 3, minItems = 3 } = Astro.props;
+const items = headings.filter((h) => h.depth >= 2 && h.depth <= maxDepth);
+const show = items.length >= minItems;
+---
+
+{show && (
+  <nav class="toc" aria-label="Table of contents">
+    <details open>
+      <summary>Contents</summary>
+      <ol>
+        {items.map((h) => (
+          <li class={`toc__item toc__item--d${h.depth}`}>
+            <a href={`#${h.slug}`}>{h.text}</a>
+          </li>
+        ))}
+      </ol>
+    </details>
+  </nav>
+)}

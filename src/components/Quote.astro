@@ -1,0 +1,22 @@
+---
+/**
+ * Pull quote — a large, centered serif blockquote, set apart from the body.
+ *
+ * Usage in MDX:
+ *   <Quote cite="George Box">All models are wrong, but some are useful.</Quote>
+ *
+ * The `cite` attribution renders below the quote in small Inter.
+ */
+interface Props {
+  cite?: string;
+}
+
+const { cite } = Astro.props;
+---
+
+<aside class="pull-quote">
+  <blockquote>
+    <slot />
+  </blockquote>
+  {cite && <cite class="pull-quote__cite">— {cite}</cite>}
+</aside>

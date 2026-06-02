@@ -1,0 +1,32 @@
+---
+/**
+ * Top-of-page navigation. Renders on every page (via Layout).
+ * Highlights the current section using the URL pathname.
+ */
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const items: Array<{ href: string; label: string; matches: (p: string) => boolean }> = [
+  { href: '/',         label: 'Home',     matches: (p) => p === '/' },
+  { href: '/research', label: 'Research', matches: (p) => p === '/research' || p.startsWith('/research/') },
+  { href: '/blog',     label: 'Blog',     matches: (p) => p === '/blog' || p.startsWith('/blog/') },
+  { href: '/photos',   label: 'Photos',   matches: (p) => p === '/photos' || p.startsWith('/photos/') },
+  { href: '/library',  label: 'Library',  matches: (p) => p === '/library' || p.startsWith('/library/') },
+  { href: '/about',    label: 'About',    matches: (p) => p === '/about' },
+];
+---
+
+<nav class="site-nav" aria-label="Primary">
+  {items.map((item) => {
+    const isActive = item.matches(pathname);
+    return (
+      <a
+        href={item.href}
+        class:list={['site-nav__link', { 'is-active': isActive }]}
+        aria-current={isActive ? 'page' : undefined}
+      >
+        {item.label}
+      </a>
+    );
+  })}
+</nav>

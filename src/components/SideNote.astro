@@ -1,0 +1,31 @@
+---
+/**
+ * Tufte-style margin note.
+ *
+ * Usage in MDX:
+ *   <SideNote>An aside that floats into the right gutter on wide screens.</SideNote>
+ *
+ * Or with a numeric/symbol marker:
+ *   <SideNote n="1">Numbered note.</SideNote>
+ *
+ * On wide screens (≥1080px) the note floats into the right margin.
+ * On narrow screens it's collapsed; clicking the marker reveals it inline.
+ *
+ * Pure CSS — no JavaScript shipped.
+ */
+interface Props {
+  /** Marker shown inline. Defaults to a small filled circle. */
+  n?: string | number;
+}
+
+const { n } = Astro.props;
+const marker = n ?? '●';
+// Stable-per-render unique id so multiple sidenotes don't collide
+const id = `sn-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<label class="sidenote-marker" for={id} role="doc-noteref" tabindex="0">{marker}</label>
+<input type="checkbox" id={id} class="sidenote-checkbox" aria-hidden="true" />
+<small class="sidenote">
+  <slot />
+</small>

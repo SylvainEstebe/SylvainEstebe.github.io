@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Mentee from '../components/Mentee.astro';
+---
+
+<Layout
+  title="About · Sylvain Estebe"
+  description="Background, current work, music history, and how to get in touch."
+>
+  <ThemeToggle />
+
+  <header class="blog-header">
+    <h1>About</h1>
+    <p class="pitch">A longer version of who I am and what I'm working on.</p>
+  </header>
+
+  <figure class="about-portrait">
+    <img src="/profile.jpg" alt="Sylvain Estebe" width="800" height="800" />
+  </figure>
+
+  <section class="about-section">
+    <h2>Background</h2>
+    <div class="about">
+      <p>I'm interested in how agents translate information about their environment into behavior — whether the agent is a person, a group, or a population. I like moving between scales, building models that are simple enough to reason about and testable against data.</p>
+      <p>In practice I move across the whole pipeline. I build the models — Bayesian cognitive models, agent-based simulations — and I do the applied data science around them: customer segmentation and churn modeling at Norlys, energy-demand forecasting, and LLM annotation pipelines run over ~24,000 French novels. Earlier, at <a href="https://www.uio.no/ritmo/english/">RITMO in Oslo</a>, I worked on the experimental side — motion capture, eye-tracking, and physiological recording to measure cognitive and physical effort in pianists.</p>
+      <p>I also care about design and presentation — a sensibility carried over from a decade as a music producer before academia, composing for <a href="https://www.youtube.com/watch?v=POhHq6dmPWY&list=RDPOhHq6dmPWY&start_radio=1">Jok'air</a> and <a href="https://www.youtube.com/watch?v=snSiqRZDXMI&list=RDsnSiqRZDXMI&start_radio=1">Disiz</a>, with work for ads and theatre (four gold records, one platinum). Whether it's a model, a figure, or this website, how something looks is part of the work to me — not an afterthought.</p>
+      <p>Based in Aarhus, Denmark. Ongoing collaboration at Institut Jean Nicod (ENS/PSL, Paris).</p>
+    </div>
+  </section>
+
+  <h2>The scenic route</h2>
+  <div class="about">
+    <p>I did not take the straight path. Roughly, in order:</p>
+  </div>
+  <ul class="updates timeline">
+    <li><strong>1993</strong><span>Born. A promising start.</span></li>
+    <li><strong>2010</strong><span>Started making music. Over the next decade: four gold records and one platinum — and still no idea how to integrate by parts.</span></li>
+    <li><strong>2011</strong><span>Dropped out of high school, at 18. It wasn't working out.</span></li>
+    <li><strong>2012</strong><span>CAP Petite Enfance — officially qualified to look after toddlers. Better preparation for debugging models that won't converge than it sounds.</span></li>
+    <li><strong>2019</strong><span>Went back for the high-school diploma I'd skipped (DAEU). Turns out you're allowed to just do that.</span></li>
+    <li><strong>2020</strong><span>BSc Mathematics &amp; Computer Science, Nancy. The integration-by-parts situation improved.</span></li>
+    <li><strong>2023</strong><span>MSc Cognitive Science, Aarhus — grade A on the thesis. Teenage me would not believe it.</span></li>
+    <li><strong>2025</strong><span>Research Assistant, CHC Aarhus. The toddlers are Bayesian agents now.</span></li>
+  </ul>
+
+  <h2>Industry</h2>
+  <div class="about">
+    <p>Data science intern at Norlys (Danish energy provider). Customer segmentation from high-dimensional data using clustering and UMAP.</p>
+  </div>
+
+  <h2>Teaching & outreach</h2>
+  <ul class="updates">
+    <li>
+      <strong>2025–2026</strong>
+      <span>
+        Mentor, Danish Data Science Academy — mentoring{' '}
+        {/* Replace these with your real mentees. Add/remove <Mentee> freely.
+            comment = what they said about you; link = their site/LinkedIn (optional). */}
+        <Mentee name="[Mentee name]" comment="[A short word from them about the mentoring.]" link="" />.
+      </span>
+    </li>
+    <li><strong>2025</strong><span>Teaching assistant, <em>Probability Theory and Statistics for Computational Humanities</em>, Aarhus University</span></li>
+    <li><strong>2020–2022</strong><span>Translator, Cognijunior — French adaptation of a neuroscience teaching kit for young audiences</span></li>
+  </ul>
+
+  <h2>Contact</h2>
+  <div class="about">
+    <p>Open to research collaborations and short-term consulting on Bayesian modeling, LLM pipelines, and behavioral data.</p>
+    <p><a href="mailto:sylvain.estebe@gmail.com">sylvain.estebe@gmail.com</a> · <a href="https://github.com/SylvainEstebe">GitHub</a> · <a href="https://orcid.org/0009-0006-6020-869X">ORCID</a> · <a href="https://www.linkedin.com/in/sylvain-estebe-97485a118/?locale=en">LinkedIn</a> · <a href="https://bsky.app/profile/sylvainestebe.bsky.social">Bluesky</a> · <a href="https://instagram.com/sylvain_estebe">Instagram</a></p>
+    <p><a href="/cv.pdf">CV (PDF)</a></p>
+  </div>
+
+  <SiteFooter />
+</Layout>

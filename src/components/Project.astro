@@ -1,14 +1,38 @@
 ---
 interface Props {
   title: string;
+  /** Small scale label above the title (e.g. "Group" or "Population · Cultural evolution"). */
+  scale?: string;
+  /** The driving question, rendered as an italic hook line under the title. */
+  question?: string;
   status?: string;
+  /** Optional explicit state. If omitted, inferred from `status` text. */
+  state?: 'in-progress' | 'published' | 'paused' | 'archived';
 }
 
-const { title, status } = Astro.props;
+const { title, scale, question, status, state } = Astro.props;
+
+// Infer state from the status string when not given.
+function inferState(s?: string): Props['state'] | undefined {
+  if (!s) return undefined;
+  const lower = s.toLowerCase();
+  if (/(prep|progress|writing|drafting|review|submitted)/.test(lower)) return 'in-progress';
+  if (/(publish|out|accepted|appeared)/.test(lower)) return 'published';
+  if (/(paus|hold|hiatus)/.test(lower)) return 'paused';
+  if (/(archiv|done|complete|finished)/.test(lower)) return 'archived';
+  return undefined;
+}
+
+const effectiveState = state ?? inferState(status);
 ---
 
 <div class="project">
-  <div class="title"><strong>{title}</strong></div>
+  {scale && <p class="project__scale">{scale}</p>}
+  <div class="title">
+    {effectiveState && <span class={`status-dot status-dot--${effectiveState}`} aria-hidden="true"></span>}
+    <strong>{title}</strong>
+  </div>
+  {question && <p class="project__question">{question}</p>}
   <div class="meta"><slot /></div>
   {status && <span class="status">{status}</span>}
 </div>

@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<Layout
+  title="Colophon · Sylvain Estebe"
+  description="How this site is built — stack, fonts, hosting, and design decisions."
+>
+  <ThemeToggle />
+
+  <header class="blog-header">
+    <h1>Colophon</h1>
+    <p class="pitch">A note on how this site is made.</p>
+  </header>
+
+  <div class="about">
+    <p>This is a small, static site. I wanted something that loads fast, reads well, and is easy to keep around for a long time. No frameworks downloaded to the reader, no analytics, no cookie banner.</p>
+  </div>
+
+  <h2>Stack</h2>
+  <ul class="updates">
+    <li><strong>Framework</strong><span><a href="https://astro.build">Astro 5</a> with <a href="https://mdxjs.com/">MDX</a> for posts that need richer components</span></li>
+    <li><strong>Styling</strong><span>Hand-written CSS with custom properties for the dual theme. No utility framework.</span></li>
+    <li><strong>Hosting</strong><span>GitHub Pages, deployed via GitHub Actions on push to <code>main</code></span></li>
+    <li><strong>Source</strong><span><a href="https://github.com/SylvainEstebe/SylvainEstebe.github.io">github.com/SylvainEstebe/SylvainEstebe.github.io</a></span></li>
+  </ul>
+
+  <h2>Typography</h2>
+  <ul class="updates">
+    <li><strong>Body</strong><span><a href="https://fonts.google.com/specimen/Fraunces">Fraunces</a> — a warm variable serif with optical sizing, used for prose and display titles</span></li>
+    <li><strong>UI</strong><span><a href="https://fonts.google.com/specimen/Inter">Inter</a> — sans-serif for navigation, metadata, code blocks' line numbers, and section eyebrows</span></li>
+    <li><strong>Mono</strong><span>System monospace stack (SF Mono / Menlo / Consolas) — no extra download</span></li>
+  </ul>
+
+  <h2>Design notes</h2>
+  <div class="about">
+    <p>The warm cream palette (<code>#fbf6ec</code> light, <code>#1a1814</code> dark) is a small rebellion against the cool grays of most academic sites. The accent stays blue (<code>#39468a</code>) because some habits are worth keeping.</p>
+    <p>Blog posts use a Tufte-style layout: text in a comfortable reading column, with <em>side notes</em> floating into the right margin on wide screens and collapsing to click-to-expand on mobile. The pattern is borrowed from <a href="https://edwardtufte.github.io/tufte-css/">Tufte CSS</a>, the spirit from <a href="https://maggieappleton.com/">Maggie Appleton</a>.</p>
+    <p>The photo gallery uses a justified-flex layout — each image's intrinsic dimensions drive a CSS <code>flex-grow</code> calculation so every row fills the page width, without any JavaScript. Adapted from the <a href="https://astro-photo-grid.netlify.app/">astro-photo-grid</a> starter.</p>
+  </div>
+
+  <h2>Performance</h2>
+  <div class="about">
+    <p>A typical page ships under 30 KB of HTML + CSS to the reader. Images go through Astro's asset pipeline (responsive WebP, lazy loading). The only JavaScript on most pages is the theme-toggle switch — about 20 lines.</p>
+  </div>
+
+  <h2>Influences</h2>
+  <div class="about">
+    <p>I borrowed shamelessly from <a href="https://maggieappleton.com/">Maggie Appleton</a> (the warm cream and serif typography, the side-note pattern), <a href="https://edwardtufte.github.io/tufte-css/">Tufte CSS</a> (marginalia), and the broader <a href="https://maggieappleton.com/garden-history">digital gardens</a> movement (the post/note distinction).</p>
+  </div>
+
+  <SiteFooter />
+</Layout>

@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('blog', ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true
+  );
+  const tagMap = new Map<string, typeof entries>();
+  for (const entry of entries) {
+    for (const tag of entry.data.tags) {
+      if (!tagMap.has(tag)) tagMap.set(tag, []);
+      tagMap.get(tag)!.push(entry);
+    }
+  }
+  return Array.from(tagMap.entries()).map(([tag, items]) => ({
+    params: { tag },
+    props: {
+      tag,
+      entries: items.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()),
+    },
+  }));
+}
+
+const { tag, entries } = Astro.props;
+---
+
+<Layout title={`#${tag} · Blog`} description={`Posts tagged #${tag}`}>
+  <ThemeToggle />
+
+  <p class="back"><a href="/blog">← Blog</a></p>
+
+  <header class="blog-header">
+    <h1>#{tag}</h1>
+    <p class="pitch">{entries.length} {entries.length === 1 ? 'entry' : 'entries'}.</p>
+  </header>
+
+  <div class="blog-list">
+    {entries.map((entry) => <BlogCard entry={entry} />)}
+  </div>
+
+  <SiteFooter />
+</Layout>

@@ -1,0 +1,175 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('blog', ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true
+  );
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\/index$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await render(entry);
+const { title, description, pubDate, updatedDate, tags, cover, coverAlt, type } = entry.data;
+
+const dateLabel = pubDate.toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const updatedLabel = updatedDate?.toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const minutesRead: string | undefined = remarkPluginFrontmatter.minutesRead;
+
+// For OG image: use the post's cover if it has one, otherwise the default
+let ogImage: string | undefined;
+if (cover) {
+  const optimized = await getImage({ src: cover, width: 1200, format: 'jpg' });
+  ogImage = optimized.src;
+}
+---
+
+<Layout
+  title={`${title} · Sylvain Estebe`}
+  description={description ?? title}
+  image={ogImage}
+  ogType="article"
+  wide
+>
+  <ThemeToggle />
+
+  <div class="reading-progress" aria-hidden="true"></div>
+
+  <p class="back"><a href="/blog">← Blog</a></p>
+
+  <article class="post">
+    <header class="post__header">
+      <h1>{title}</h1>
+      <div class="post__meta">
+        <time datetime={pubDate.toISOString()}>{dateLabel}</time>
+        {minutesRead && <span> · {minutesRead}</span>}
+        {updatedLabel && <span> · updated {updatedLabel}</span>}
+      </div>
+      {tags.length > 0 && (
+        <div class="post__tags">
+          {tags.map((t) => (
+            <a class="tag" href={`/blog/tags/${t}`}>#{t}</a>
+          ))}
+        </div>
+      )}
+      {description && <p class="post__desc">{description}</p>}
+      {cover && (
+        <figure class="post__cover">
+          <Image src={cover} alt={coverAlt ?? ''} widths={[400, 800, 1200]} sizes="(max-width: 720px) 100vw, 720px" />
+          {coverAlt && <figcaption>{coverAlt}</figcaption>}
+        </figure>
+      )}
+    </header>
+
+    {type === 'post' && <TableOfContents headings={headings} />}
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+
+  <div class="copy-toast" id="copy-toast" role="status" aria-live="polite">Link copied</div>
+
+  <SiteFooter />
+
+  <script is:inline>
+    (function () {
+      // ── Reading progress bar ───────────────────────────────────────
+      const bar = document.querySelector('.reading-progress');
+      const article = document.querySelector('article.post');
+      if (bar && article) {
+        const update = () => {
+          const rect = article.getBoundingClientRect();
+          const total = rect.height - window.innerHeight;
+          const scrolled = -rect.top;
+          const pct = total > 0 ? Math.min(100, Math.max(0, (scrolled / total) * 100)) : 0;
+          bar.style.setProperty('--progress', pct.toFixed(2) + '%');
+        };
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+      }
+
+      // ── TOC scroll-spy ─────────────────────────────────────────────
+      const tocLinks = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
+      if (tocLinks.length > 0 && 'IntersectionObserver' in window) {
+        const headings = tocLinks
+          .map((a) => document.getElementById(a.getAttribute('href').slice(1)))
+          .filter(Boolean);
+
+        const activate = (id) => {
+          tocLinks.forEach((a) => {
+            const li = a.closest('.toc__item');
+            if (!li) return;
+            if (a.getAttribute('href') === '#' + id) li.classList.add('toc__item--active');
+            else li.classList.remove('toc__item--active');
+          });
+        };
+
+        const visible = new Map();
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              visible.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+            });
+            // Pick the heading with the highest ratio, breaking ties by document order
+            let bestId = null;
+            let bestRatio = 0;
+            headings.forEach((h) => {
+              const r = visible.get(h.id) || 0;
+              if (r > bestRatio) { bestRatio = r; bestId = h.id; }
+            });
+            if (bestId) activate(bestId);
+          },
+          { rootMargin: '-10% 0px -70% 0px', threshold: [0, 0.25, 0.5, 1] }
+        );
+        headings.forEach((h) => obs.observe(h));
+      }
+
+      // ── Heading anchor click → copy URL to clipboard ───────────────
+      const toast = document.getElementById('copy-toast');
+      let toastTimer;
+      const showToast = (msg) => {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 1600);
+      };
+
+      document.querySelectorAll('.prose .heading-anchor').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          const href = a.getAttribute('href');
+          if (!href) return;
+          const url = new URL(href, window.location.href).toString();
+          if (navigator.clipboard && window.isSecureContext) {
+            e.preventDefault();
+            navigator.clipboard.writeText(url).then(
+              () => {
+                showToast('Link copied');
+                history.replaceState(null, '', href);
+              },
+              () => { /* fall through to default navigation */ }
+            );
+          }
+        });
+      });
+    })();
+  </script>
+</Layout>

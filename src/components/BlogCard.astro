@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { title, description, pubDate, tags, cover, coverAlt, type } = entry.data;
+const slug = entry.id.replace(/\/index$/, '');
+const dateLabel = pubDate.toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article class={`blog-card blog-card--${type}`}>
+  <a class="blog-card__link" href={`/blog/${slug}`}>
+    {cover && (
+      <div class="blog-card__cover">
+        <Image src={cover} alt={coverAlt ?? ''} widths={[400, 800]} sizes="(max-width: 600px) 100vw, 400px" />
+      </div>
+    )}
+    <div class="blog-card__body">
+      <h3 class="blog-card__title">{title}</h3>
+      {description && <p class="blog-card__desc">{description}</p>}
+      <div class="blog-card__meta">
+        <time datetime={pubDate.toISOString()}>{dateLabel}</time>
+        {tags.length > 0 && (
+          <span class="blog-card__tags">
+            {tags.map((t) => <span class="tag">#{t}</span>)}
+          </span>
+        )}
+      </div>
+    </div>
+  </a>
+</article>

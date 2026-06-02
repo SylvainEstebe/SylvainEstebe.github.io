@@ -1,0 +1,27 @@
+---
+/**
+ * A mentee name with a hover/focus bubble showing their comment and an
+ * optional link. Works on hover (desktop), focus (keyboard), and tap (mobile,
+ * since tapping focuses the button).
+ */
+interface Props {
+  name: string;
+  comment?: string;
+  link?: string;
+}
+
+const { name, comment, link } = Astro.props;
+const hasBubble = Boolean(comment || link);
+---
+
+<span class="mentee">
+  <button type="button" class="mentee__name" aria-expanded="false">{name}</button>
+  {hasBubble && (
+    <span class="mentee__bubble" role="tooltip">
+      {comment && <span class="mentee__comment">“{comment}”</span>}
+      {link && (
+        <a href={link} target="_blank" rel="noopener" class="mentee__link">profile ↗</a>
+      )}
+    </span>
+  )}
+</span>

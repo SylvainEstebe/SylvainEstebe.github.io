@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../../layouts/Layout.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import { library, urlSlug, hasDetail, type LibraryItem } from '../../../data/library';
+
+export async function getStaticPaths() {
+  return library.filter(hasDetail).map((item) => ({
+    params: { type: item.type, slug: urlSlug(item.title) },
+    props: { item },
+  }));
+}
+
+interface Props { item: LibraryItem }
+const { item } = Astro.props;
+
+const byLabel = item.type === 'film' ? 'Directed by' : item.type === 'music' ? 'By' : 'By';
+const isLocalImage = typeof item.cover === 'object' && item.cover !== null;
+---
+
+<Layout
+  title={`${item.title} · Library`}
+  description={item.note ?? `${item.title}${item.by ? ' — ' + item.by : ''}`}
+>
+  <ThemeToggle />
+
+  <p class="back"><a href="/library">← Library</a></p>
+
+  <article class="library-detail">
+    <header class="library-detail__header">
+      {item.cover && (
+        <div class="library-detail__cover">
+          {isLocalImage ? (
+            <Image
+              src={item.cover}
+              alt={item.coverAlt ?? `Cover of ${item.title}`}
+              widths={[200, 400, 600]}
+              sizes="(max-width: 600px) 50vw, 240px"
+            />
+          ) : (
+            <img src={item.cover as string} alt={item.coverAlt ?? `Cover of ${item.title}`} loading="lazy" />
+          )}
+        </div>
+      )}
+      <div class="library-detail__meta">
+        <p class="library-detail__type">{item.type}{item.status === 'now' && <span class="badge badge--now">now</span>}</p>
+        <h1>{item.title}</h1>
+        {item.by && <p class="library-detail__by">{byLabel} <strong>{item.by}</strong>{item.year && <span> · {item.year}</span>}</p>}
+        {item.rating && (
+          <p class="library-detail__rating" aria-label={`${item.rating} out of 5`}>
+            <span>{'★'.repeat(item.rating)}</span><span class="dim">{'★'.repeat(5 - item.rating)}</span>
+          </p>
+        )}
+        {item.link && (
+          <p class="library-detail__link">
+            <a href={item.link} target="_blank" rel="noopener">Publisher page ↗</a>
+          </p>
+        )}
+        {item.note && <p class="library-detail__note">{item.note}</p>}
+      </div>
+    </header>
+
+    {item.quotes && item.quotes.length > 0 && (
+      <section class="library-quotes">
+        <h2>Quotes I liked</h2>
+        <ul>
+          {item.quotes.map((q) => (
+            <li class="library-quote">
+              <blockquote>{q.text}</blockquote>
+              {q.cite && <cite class="library-quote__cite">— {q.cite}</cite>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {(!item.quotes || item.quotes.length === 0) && (
+      <p class="library-detail__empty"><em>No quotes yet — I'm still reading.</em></p>
+    )}
+  </article>
+
+  <SiteFooter />
+</Layout>

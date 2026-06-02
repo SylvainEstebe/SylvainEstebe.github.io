@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+
+const entries = (
+  await getCollection('blog', ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true
+  )
+).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const posts = entries.filter((e) => e.data.type === 'post');
+const notes = entries.filter((e) => e.data.type === 'note');
+---
+
+<Layout
+  title="Blog · Sylvain Estebe"
+  description="Essays and notes on computational cognitive science, cultural evolution, and whatever else catches my attention."
+>
+  <ThemeToggle />
+
+  <header class="blog-header">
+    <h1>Blog</h1>
+    <p class="pitch">Long-form essays and shorter notes.</p>
+  </header>
+
+  {posts.length > 0 && (
+    <section>
+      <h2>Posts</h2>
+      <div class="blog-list">
+        {posts.map((entry) => <BlogCard entry={entry} />)}
+      </div>
+    </section>
+  )}
+
+  {notes.length > 0 && (
+    <section>
+      <h2>Notes</h2>
+      <ul class="notes-list">
+        {notes.map((entry) => {
+          const slug = entry.id.replace(/\/index$/, '');
+          const date = entry.data.pubDate.toLocaleDateString('en-GB', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          });
+          return (
+            <li>
+              <strong>{date}</strong>
+              <a href={`/blog/${slug}`}>{entry.data.title}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  )}
+
+  {entries.length === 0 && (
+    <p class="pitch"><em>No posts yet.</em></p>
+  )}
+
+  <SiteFooter />
+</Layout>

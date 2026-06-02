@@ -1,0 +1,20 @@
+---
+const today = new Date();
+const lastUpdated = today.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+---
+
+<footer class="site-footer">
+  <nav class="site-footer__nav">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/research">Research</a>
+    <a href="/blog">Blog</a>
+    <a href="/photos">Photos</a>
+    <a href="/library">Library</a>
+    <a href="/rss.xml">RSS</a>
+    <a href="/colophon">Colophon</a>
+  </nav>
+  <p class="site-footer__line">
+    Last updated {lastUpdated} · Built with <a href="https://astro.build">Astro</a>
+  </p>
+</footer>

@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<Layout
+  title="Not found · Sylvain Estebe"
+  description="The page you were looking for doesn't exist (yet)."
+>
+  <ThemeToggle />
+
+  <div class="four-oh-four">
+    <p class="four-oh-four__digits">404</p>
+    <h1>Not here.</h1>
+    <p class="pitch">
+      The page you were looking for doesn't exist — or hasn't been written yet.
+      I take that as a writing prompt more than a problem.
+    </p>
+    <div class="four-oh-four__links">
+      <a href="/">Home</a>
+      <a href="/research">Research</a>
+      <a href="/blog">Blog</a>
+      <a href="/photos">Photos</a>
+      <a href="/library">Library</a>
+      <a href="/about">About</a>
+    </div>
+  </div>
+
+  <SiteFooter />
+</Layout>
