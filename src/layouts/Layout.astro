@@ -99,5 +99,15 @@ const ogImage = new URL(image ?? '/og-default.jpg', Astro.site ?? Astro.url).toS
         });
       });
     </script>
+
+    {/* Privacy-friendly, cookieless analytics — production only, so local dev
+        and previews don't pollute the stats. */}
+    {import.meta.env.PROD && (
+      <script
+        is:inline
+        data-goatcounter="https://sylvain.goatcounter.com/count"
+        async
+        src="https://gc.zgo.at/count.js"></script>
+    )}
   </body>
 </html>
