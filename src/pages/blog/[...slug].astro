@@ -49,7 +49,7 @@ if (cover) {
 >
   <ThemeToggle />
 
-  <div class="reading-progress" aria-hidden="true"></div>
+  <div class="reading-progress" aria-hidden="true"><div class="reading-progress__bar"></div></div>
 
   <p class="back"><a href="/blog">← Blog</a></p>
 
@@ -91,19 +91,32 @@ if (cover) {
   <script is:inline>
     (function () {
       // ── Reading progress bar ───────────────────────────────────────
-      const bar = document.querySelector('.reading-progress');
+      // Composite-only: measure layout once (+ on resize), coalesce scroll
+      // events with rAF, and drive a transform: scaleX — never width, never a
+      // per-frame layout read.
+      const fill = document.querySelector('.reading-progress__bar');
       const article = document.querySelector('article.post');
-      if (bar && article) {
-        const update = () => {
+      if (fill && article) {
+        let articleTop = 0, articleHeight = 0, ticking = false;
+        const measure = () => {
           const rect = article.getBoundingClientRect();
-          const total = rect.height - window.innerHeight;
-          const scrolled = -rect.top;
-          const pct = total > 0 ? Math.min(100, Math.max(0, (scrolled / total) * 100)) : 0;
-          bar.style.setProperty('--progress', pct.toFixed(2) + '%');
+          articleTop = rect.top + window.scrollY;
+          articleHeight = rect.height;
         };
-        update();
-        window.addEventListener('scroll', update, { passive: true });
-        window.addEventListener('resize', update);
+        const paint = () => {
+          ticking = false;
+          const total = articleHeight - window.innerHeight;
+          const scrolled = window.scrollY - articleTop;
+          const p = total > 0 ? Math.min(1, Math.max(0, scrolled / total)) : 0;
+          fill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+        };
+        const onScroll = () => {
+          if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+        };
+        measure();
+        paint();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', () => { measure(); paint(); });
       }
 
       // ── TOC scroll-spy ─────────────────────────────────────────────

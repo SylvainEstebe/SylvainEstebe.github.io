@@ -473,14 +473,23 @@ h3:first-of-type { margin-top: 0; }
 
 .status-dot--in-progress {
   background: #d4a017; /* warm amber */
-  box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.4);
-  animation: pulse-dot 2.4s ease-out infinite;
 }
 
-@keyframes pulse-dot {
-  0% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.45); }
-  70% { box-shadow: 0 0 0 6px rgba(212, 160, 23, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0); }
+/* Pulsing ring via transform + opacity (compositor-only) instead of box-shadow (paint). */
+.status-dot--in-progress::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(212, 160, 23, 0.45);
+  animation: pulse-ring 2.4s ease-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.5; }
+  70%  { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
 }
 
 .status-dot--published { background: #4a8a4a; }     /* sage green */
@@ -488,7 +497,7 @@ h3:first-of-type { margin-top: 0; }
 .status-dot--archived  { background: var(--rule); border: 1px solid var(--muted); }
 
 @media (prefers-reduced-motion: reduce) {
-  .status-dot--in-progress { animation: none; }
+  .status-dot--in-progress::after { animation: none; opacity: 0; }
 }
 
 .project .meta {
@@ -1036,14 +1045,15 @@ a.tag:hover {
   pointer-events: none;
 }
 
-.reading-progress::after {
-  content: '';
-  display: block;
+.reading-progress__bar {
   height: 100%;
-  width: var(--progress, 0%);
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
   background: var(--accent);
-  transition: width 0.08s linear;
+  transition: transform 0.08s linear;
   opacity: 0.85;
+  will-change: transform;
 }
 
 /* Copy-link toast (used by heading anchor click) */
