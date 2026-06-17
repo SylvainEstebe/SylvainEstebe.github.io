@@ -52,15 +52,9 @@ import Mentee from '../components/Mentee.astro';
 
   <h2>Teaching & outreach</h2>
   <ul class="updates">
-    <li>
-      <strong>2025–2026</strong>
-      <span>
-        Mentor, Danish Data Science Academy — mentoring{' '}
-        {/* Replace these with your real mentees. Add/remove <Mentee> freely.
-            comment = what they said about you; link = their site/LinkedIn (optional). */}
-        <Mentee name="[Mentee name]" comment="[A short word from them about the mentoring.]" link="" />.
-      </span>
-    </li>
+    {/* To name mentees with a hover bubble, swap the line below for:
+        <li><strong>2025–2026</strong><span>Mentor, Danish Data Science Academy — mentoring <Mentee name="…" comment="…" link="…" />.</span></li> */}
+    <li><strong>2025–2026</strong><span>Mentor, Danish Data Science Academy</span></li>
     <li><strong>2025</strong><span>Teaching assistant, <em>Probability Theory and Statistics for Computational Humanities</em>, Aarhus University</span></li>
     <li><strong>2020–2022</strong><span>Translator, Cognijunior — French adaptation of a neuroscience teaching kit for young audiences</span></li>
   </ul>
