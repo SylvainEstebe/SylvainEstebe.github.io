@@ -119,7 +119,7 @@ const lightboxData = sorted.map((p, i) => ({
             <div class="photo-exhibition__head">
               <h2>{ex.title}</h2>
               <p class="photo-exhibition__meta">
-                {ex.venue}{ex.city && `, ${ex.city}`}<span class="sep"> · </span>{ex.date}
+                {[[ex.venue, ex.city].filter(Boolean).join(', '), ex.date].filter(Boolean).join(' · ')}
                 {ex.link && <> <a href={ex.link} target="_blank" rel="noopener" aria-label={`${ex.title} — external link`}>↗</a></>}
               </p>
               {ex.note && <p class="photo-exhibition__note">{ex.note}</p>}
