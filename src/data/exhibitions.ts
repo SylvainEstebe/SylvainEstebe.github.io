@@ -29,6 +29,6 @@ export const exhibitions: Exhibition[] = [
     title: 'Romantic love',
     // Venue and date to be confirmed — exhibition in preparation.
     date: 'In preparation',
-    note: 'A photographic companion to my research with Nicolas Baumard on the rise of romantic love in French fiction.',
+    note: 'Field notes on pair bonding — people, and one pair of sheep, moving through the world in twos.',
   },
 ];
