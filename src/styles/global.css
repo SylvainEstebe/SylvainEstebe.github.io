@@ -1472,18 +1472,16 @@ a.tag:hover {
   }
 }
 
-/* ---------- Photo gallery (justified flex layout) ----------
-   Each image carries its intrinsic --w / --h as inline custom properties.
-   Flexbox computes row layouts where every image is the same row-height,
-   and the last item in each row grows to fill any leftover space.
-   Pure CSS — no JS, no layout libraries.
+/* ---------- Photo gallery (uniform grid) ----------
+   All thumbnails render at the same size: square cells, images cropped to
+   fill with object-fit: cover. Pure CSS grid — no JS, no layout libraries.
+   (Class name kept as `justified-gallery` for markup stability.)
 */
 
 .justified-gallery {
-  --gap: max(2vw, 10px);
-  --row-height: clamp(180px, 22vw, 360px);
-  display: flex;
-  flex-wrap: wrap;
+  --gap: max(1.4vw, 10px);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: var(--gap);
   margin: 2rem 0 3rem;
   list-style: none;
@@ -1491,18 +1489,14 @@ a.tag:hover {
 }
 
 .justified-gallery__item {
-  /* The magic: flex-grow proportional to aspect ratio, flex-basis sized
-     so each row's height ≈ --row-height. */
-  flex-grow: calc(var(--w) * 1000 / var(--h));
-  flex-basis: calc(var(--row-height) * var(--w) / var(--h));
-  aspect-ratio: calc(var(--w) / var(--h));
+  aspect-ratio: 1 / 1;
   position: relative;
   display: block;
   overflow: hidden;
   border-radius: 3px;
   background: var(--bg-elev);
   text-decoration: none;
-  /* Reset native button styles since this is now a <button> */
+  /* Reset native button styles since this is a <button> */
   border: 0;
   padding: 0;
   margin: 0;
@@ -1528,7 +1522,7 @@ a.tag:hover {
 
 @media (hover: hover) {
   .justified-gallery__item:hover img {
-    transform: scale(1.03);
+    transform: scale(1.04);
     filter: brightness(1.05);
   }
   .justified-gallery__item:hover .justified-gallery__caption {
@@ -1561,22 +1555,15 @@ a.tag:hover {
 
 @media (max-width: 600px) {
   .justified-gallery {
-    --row-height: clamp(160px, 45vw, 240px);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     --gap: 8px;
   }
   /* On mobile, keep captions visible since hover doesn't exist */
   .justified-gallery__caption {
     opacity: 1;
     transform: none;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
   }
-}
-
-/* The last row often has fewer items — they'd otherwise stretch oddly.
-   Add an invisible flex item to absorb the slack. */
-.justified-gallery::after {
-  content: '';
-  flex-grow: 10;
 }
 
 /* Exhibition group heading on /photos */

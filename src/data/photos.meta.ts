@@ -27,22 +27,6 @@ export interface PhotoMeta {
 }
 
 export const photoMeta: Record<string, PhotoMeta> = {
-  'ferry-deck-dusk.jpg': {
-    alt: 'View through a ferry doorway onto the deck at dusk; a gull is silhouetted against pink-streaked clouds, the wet deck reflects the sky.',
-    caption: 'From the threshold.',
-    // location: 'North Sea',
-  },
-  'bedroom-window.jpg': {
-    alt: 'A dim bedroom with a bare mattress and a single pillow; an open window frames a sunlit terracotta wall beyond.',
-    caption: 'A room with a wall.',
-    // location: 'Marrakech',
-  },
-  'curtains-evening.jpg': {
-    alt: 'Sheer light curtains backlit by late-afternoon sun, with dark garden foliage visible beyond.',
-    caption: 'Garden light, through linen.',
-    // location: 'Aarhus',
-  },
-
   // ── Romantic love (exhibition) ──────────────────────────────────────────
   'rome-fountain-couple.jpg': {
     alt: 'An older couple sit close together on the rim of a Baroque fountain in a Roman piazza at dusk, lit restaurants glowing behind them.',
